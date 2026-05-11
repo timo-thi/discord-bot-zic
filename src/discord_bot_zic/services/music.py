@@ -75,7 +75,7 @@ class MusicService:
                 return f"Connecté. File restaurée: {len(state.queue)} musique(s)."
             return "Connecté au vocal."
 
-    async def play(self, member: discord.Member, track: MusicTrack | None) -> str:
+    async def play(self, member: discord.Member, track: MusicTrack | None, shortcut_queue: bool = False) -> str:
         """Resume, play the next queued track, start `track`, or enqueue it."""
         if member.voice is None or member.voice.channel is None:
             raise ValueError("Tu dois être connecté à un salon vocal.")
@@ -101,9 +101,14 @@ class MusicService:
 
             validate_audio_file(track.file_path)
             if voice_client.is_playing() or voice_client.is_paused():
-                state.queue.append(track)
+                if shortcut_queue:
+                    state.queue.insert(0, track)
+                    message = f"Ajouté au début de la file: `{track.name}`."
+                else:
+                    state.queue.append(track)
+                    message = f"Ajouté à la file: `{track.name}`."
                 await self.queue_store.save_queue(guild.id, state.queue)
-                return f"Ajouté à la file: `{track.name}`."
+                return message
 
             await self._play_track_locked(guild, state, track)
             return f"Lecture: `{track.name}`."

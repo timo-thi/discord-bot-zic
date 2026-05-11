@@ -77,12 +77,13 @@ données.
 - `/music connect resume_queue:false`
   Connecte le bot au salon vocal de l'utilisateur. Si `resume_queue` vaut `true`,
   restaure la file d'attente sauvegardée pour ce serveur.
-- `/music play filter:<optionnel>`
+- `/music play filter:<optionnel> shortcut_queue:false`
   Filtre le catalogue sur le nom et les tags. Si une seule musique correspond,
   elle est jouée immédiatement ou ajoutée à la file si une lecture est déjà en
   cours. Sans paramètre, reprend la lecture en pause ou joue la prochaine musique
   de la file. L'autocomplete affiche les choix sous la forme
-  `nom musique - tag1 | tag2`.
+  `nom musique - tag1 | tag2`. Si `shortcut_queue` vaut `true`, la musique est
+  placée au début de la file au lieu de la fin.
 - `/music pause`
   Met la musique en pause.
 - `/music skip`

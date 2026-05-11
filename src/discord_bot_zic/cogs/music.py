@@ -39,9 +39,17 @@ class MusicCog(commands.GroupCog, name="music"):
         await interaction.response.send_message(message, ephemeral=True)
 
     @app_commands.command(name="play", description="Joue, reprend, ou ajoute une musique à la file.")
-    @app_commands.describe(filter="Filtre sur le nom ou les tags de la musique")
+    @app_commands.describe(
+        filter="Filtre sur le nom ou les tags de la musique",
+        shortcut_queue="Place la musique au début de la file au lieu de la fin",
+    )
     @app_commands.autocomplete(filter=track_autocomplete)
-    async def play(self, interaction: discord.Interaction, filter: str | None = None) -> None:
+    async def play(
+        self,
+        interaction: discord.Interaction,
+        filter: str | None = None,
+        shortcut_queue: bool = False,
+    ) -> None:
         """Play a track matching the filter or resume/continue when no filter is provided."""
         if interaction.guild is None or not isinstance(interaction.user, discord.Member):
             await interaction.response.send_message("Commande disponible uniquement dans un serveur.", ephemeral=True)
@@ -63,7 +71,7 @@ class MusicCog(commands.GroupCog, name="music"):
                     await interaction.response.send_message(f"Aucune musique ne correspond à: `{filter}`.", ephemeral=True)
                     return
         try:
-            message = await self.music.play(interaction.user, track)
+            message = await self.music.play(interaction.user, track, shortcut_queue)
         except Exception as exc:
             message = str(exc)
         await interaction.response.send_message(message)
