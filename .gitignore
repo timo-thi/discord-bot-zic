@@ -61,6 +61,11 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# Local SQLite data
+*.sqlite
+*.sqlite3
+*.db
+
 # Flask stuff:
 instance/
 .webassets-cache
@@ -151,6 +156,7 @@ activemq-data/
 .env
 .envrc
 .venv
+.venv/
 env/
 venv/
 ENV/

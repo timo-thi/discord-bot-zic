@@ -1,0 +1,21 @@
+[project]
+name = "discord-bot-zic"
+version = "0.1.0"
+description = "Discord bot for playing local music files."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiosqlite>=0.19.0",
+    "discord.py[voice]>=2.4.0",
+    "pydantic-settings>=2.2.1",
+]
+
+[project.scripts]
+discord-bot-zic = "discord_bot_zic.__main__:main"
+
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
